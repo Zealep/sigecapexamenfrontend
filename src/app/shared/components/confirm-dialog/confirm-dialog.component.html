@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>
+  {{model.title}}
+</h1>
+
+<div mat-dialog-content>
+  <p>{{model.message}}</p>
+</div>
+
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="yes()">
+ 
+    Yes</button>
+  <button mat-raised-button color="primary" (click)="no()">
+    <mat-icon>
+      cancel
+    </mat-icon>
+    No</button>
+
+</div>

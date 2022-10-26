@@ -1,0 +1,17 @@
+.contenedor{
+  width: 50%;
+  margin: 0 auto;
+
+}
+
+
+.example-container {
+  height: 90%;
+  background-color: #ffff;
+}
+
+
+.custom-sidenav{
+  font-family: 'Poppins' !important;
+font-size: 14px !important;
+}
