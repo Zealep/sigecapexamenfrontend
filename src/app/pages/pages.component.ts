@@ -22,31 +22,31 @@ export class PagesComponent implements OnInit {
 
     paddingAtStart: true,
     classname: 'custom-sidenav',
-    listBackgroundColor: '#FF3E33',
+    listBackgroundColor: '#13124B',
     fontColor: 'white',
-    backgroundColor: '#FF3E33',
-    selectedListFontColor: '#13124B',
+    backgroundColor: '#13124B',
+    selectedListFontColor: '#FF3E33',
     highlightOnSelect: true,
   };
 
 
 
 
-  constructor(private observer: BreakpointObserver, private router: Router,private menuService:MenuService) { }
+  constructor(private observer: BreakpointObserver, private router: Router, private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getMenus();
   }
 
-  getMenus(){
-    this.menuService.getMenus('22060017','20210009')
-    .subscribe(x=>{
-      this.items = x;
-    })
+  getMenus() {
+    this.menuService.getMenus('22060017', '20210009')
+      .subscribe(x => {
+        this.items = x;
+      })
   }
 
-  selectedItem(event:any){
-    console.log('event',event)
+  selectedItem(event: any) {
+    console.log('event', event)
     //this.router.navigate(['/pages'+event.link]);
   }
 

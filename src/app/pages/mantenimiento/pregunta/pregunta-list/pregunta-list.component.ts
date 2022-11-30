@@ -18,26 +18,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PreguntaListComponent implements OnInit {
 
-  displayedColumns: string[] = ['curso', 'pregunta', 'tipoPregunta', 'estado','acciones'];
+  displayedColumns: string[] = ['curso', 'pregunta', 'tipoPregunta', 'estado', 'acciones'];
   dataSource!: MatTableDataSource<Pregunta>;
   preguntas: Pregunta[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private preguntaService:PreguntaService,
+  constructor(private preguntaService: PreguntaService,
     private dialog: MatDialog,
-    private snackBar:MatSnackBar
-   ) {
+    private snackBar: MatSnackBar
+  ) {
 
-   }
+  }
 
   ngOnInit(): void {
     this.load();
   }
 
-  load(){
-    this.preguntaService.getPreguntas().subscribe(x=>{
+  load() {
+    this.preguntaService.getPreguntas().subscribe(x => {
       this.preguntas = x;
       this.dataSource = new MatTableDataSource(this.preguntas);
       this.dataSource.paginator = this.paginator;
@@ -54,7 +54,22 @@ export class PreguntaListComponent implements OnInit {
     }
   }
 
+  update(x: Pregunta) {
+    let newState
+    if (x.estado == 'ACT') {
+      newState = 'INA'
+    }
+    else {
+      newState = 'ACT'
+    }
 
+    this.preguntaService.updateState(x.idPregunta, newState)
+      .subscribe(x => {
+        this.load()
+      })
+  }
+
+  /*
   delete(x: Pregunta) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '600px',
@@ -82,11 +97,13 @@ export class PreguntaListComponent implements OnInit {
     });
   }
 
-  getEstado(estado:string){
-    if(estado == 'ACT'){
+  */
+
+  getEstado(estado: string) {
+    if (estado == 'ACT') {
       return 'ACTIVO'
     }
-    else{
+    else {
       return 'INACTIVO'
     }
   }

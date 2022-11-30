@@ -1,79 +1,75 @@
 <div class="container">
-  <mat-toolbar color="primary"><span>Registrar pregunta</span></mat-toolbar>
+  <mat-toolbar color="primary"><span>Registrar pregunta</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="accent" class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon" (click)="cancelar()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </mat-toolbar>
 
-    <form [formGroup]="form">
+  <form [formGroup]="form">
 
-        <div class="row" style="margin-top: 10px;">
-          <div class="col-md-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Curso</mat-label>
-              <mat-select formControlName="curso" required>
-                <mat-option>--</mat-option>
-                <mat-option *ngFor="let c of cursos" [value]="c.idCurso">
-                  {{c.nombreCurso}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Tipo Pregunta</mat-label>
-              <mat-select formControlName="tipoPregunta" required>
-                <mat-option>--</mat-option>
-                <mat-option *ngFor="let t of tipoPreguntas" [value]="t.idTipoPregunta">
-                  {{t.nombreTipoPregunta}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Curso</mat-label>
+          <mat-select formControlName="curso" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of cursos" [value]="c.idCurso">
+              {{c.nombreCurso}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo Pregunta</mat-label>
+          <mat-select formControlName="tipoPregunta" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let t of tipoPreguntas" [value]="t.idTipoPregunta">
+              {{t.nombreTipoPregunta}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        </div>
+    </div>
 
-        <div class="row">
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombre Pregunta</mat-label>
-              <input type="text" matInput formControlName="nombrePregunta" required>
-            </mat-form-field>
-          </div>
+    <div class="row">
+      <div class="col-md-8">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre Pregunta</mat-label>
+          <input type="text" matInput formControlName="nombrePregunta" required>
+        </mat-form-field>
+      </div>
 
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Puntuacion</mat-label>
-              <input type="number" min="0"  max="20" matInput formControlName="puntuacion" required placeholder="valor del 0 al 20">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Estado</mat-label>
-              <mat-select formControlName="estado" required>
-                <mat-option value="ACT">ACTIVO</mat-option>
-                <mat-option value="INA">INACTIVO</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Puntuacion</mat-label>
+          <input type="number" min="0" max="20" matInput formControlName="puntuacion" required
+            placeholder="valor del 0 al 20">
+        </mat-form-field>
+      </div>
 
-        <div></div>
-        <angular-editor  id="editor1" formControlName="enunciado" [config]="editorConfig" [placeholder]="'Ingresa el enunciado de la pregunta'"></angular-editor>
-        <angular-editor style="margin-top:0.5rem ;" id="editor2" formControlName="retroalimentacion" [config]="editorConfig" [placeholder]="'Ingresa la retroalimentacion de la pregunta'"></angular-editor>
+    </div>
 
-    </form>
+    <div></div>
+    <angular-editor id="editor1" formControlName="enunciado" [config]="editorConfig"
+      [placeholder]="'Ingresa el enunciado de la pregunta'"></angular-editor>
+    <angular-editor style="margin-top:0.5rem ;" id="editor2" formControlName="retroalimentacion" [config]="editorConfig"
+      [placeholder]="'Ingresa la retroalimentacion de la pregunta'"></angular-editor>
+
+  </form>
 
   <div class="row">
     <div class="col-md-4">
-      <button class="btn-form" [disabled]="form.invalid" (click)="grabar()" mat-raised-button color="primary">
+      <button class="button-base" [disabled]="form.invalid" (click)="grabar()" mat-raised-button color="primary">
         <mat-icon>save</mat-icon>
         <span>Grabar</span>
       </button>
     </div>
 
-    <div class="col-md-4">
-      <button class="btn-form" (click)="cancelar()" mat-raised-button>
-        <mat-icon>cancel</mat-icon>
-        <span>Cancelar</span>
-      </button>
-    </div>
+
 
   </div>
 </div>

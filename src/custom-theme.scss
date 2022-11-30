@@ -123,3 +123,31 @@ $sigecapexamenfrontend-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($sigecapexamenfrontend-theme);
 
+
+.error-style{
+  background-color:#F44336;
+  color:white;
+}
+
+.error-style button {
+  background-color: #F44336;
+  color: white !important;
+  border: none;
+}
+
+.ok-style{
+  background-color:#1b5e20;
+  color:white;
+}
+
+.ok-style button{
+  background-color: #1b5e20;
+  color: white !important;
+  border: none;
+}
+
+
+.warn-style{
+  background-color:#dbdb2a;
+  color:white;
+}

@@ -1,63 +1,55 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { ItemMenu } from '../model/dto/item-menu';
 import { catchError, throwError } from 'rxjs';
-import { Curso } from '../model/curso';
-import { TipoPregunta } from '../model/tipo-pregunta';
-import { Pregunta } from '../model/pregunta';
 import { RespuestaApi } from '../model/dto/respuesta-api';
+import { BandejaExamenInDTO } from '../model/dto/bandeja-examen';
+import { Examen } from '../model/examen';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PreguntaService {
+export class ExamenService {
 
 
-  private url: string = `${environment.host}/pregunta`;
+  private url: string = `${environment.host}/examen`;
 
   constructor(private router: Router,
     private http: HttpClient) { }
 
-  getPreguntas() {
-    return this.http.get<Pregunta[]>(`${this.url}`)
+  bandeja(x: BandejaExamenInDTO) {
+    return this.http.post<Examen[]>(`${this.url}/bandeja`, x)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntaById(id: string) {
-    return this.http.get<Pregunta>(`${this.url}/${id}`)
+
+  getAll() {
+    return this.http.get<Examen[]>(`${this.url}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntasByCurso(idCurso: string) {
-    return this.http.get<Pregunta[]>(`${this.url}/curso/${idCurso}`)
+  getByCurso(curso: string) {
+    return this.http.get<Examen[]>(`${this.url}/curso/${curso}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntasByTipoPregunta(idTipoPregunta: string) {
-    return this.http.get<Pregunta[]>(`${this.url}/tipoPregunta/${idTipoPregunta}`)
+  getById(id: string) {
+    return this.http.get<Examen>(`${this.url}/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntasByCursoAndTipoPregunta(idCurso: string, idTipoPregunta: string) {
-    return this.http.get<Pregunta[]>(`${this.url}/curso/${idCurso}/tipoPregunta/${idTipoPregunta}`)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
 
-  save(pregunta: Pregunta) {
-    return this.http.post<Pregunta>(`${this.url}`, pregunta)
+  save(e: Examen) {
+    return this.http.post<Examen>(`${this.url}`, e)
       .pipe(
         catchError(this.handleError)
       );
@@ -86,7 +78,7 @@ export class PreguntaService {
       console.log('Error:', error.error);
     }
     //catch and rethrow
-    return throwError('Error en peticion del servicio');
+    return throwError(error);
 
   }
 }

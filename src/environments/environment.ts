@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'http://localhost:8080/sigecapexamenbackend'
+  host: 'http://localhost:8080/sigecapexamenbackend',
 };
 
 /*

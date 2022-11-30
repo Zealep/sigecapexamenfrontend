@@ -1,78 +1,84 @@
 <div class="principal">
 
   <mat-toolbar color="primary">
-    <button mat-icon-button matTooltip="Registrar" color="accent" matTooltipPosition="above" [routerLink]="'/pages/pregunta/add'">
+    <button mat-icon-button matTooltip="Registrar" color="accent" matTooltipPosition="above"
+      [routerLink]="'/pages/pregunta/add'">
       <mat-icon>add</mat-icon>
     </button>
     <span>Mantenimiento de preguntas</span>
-    </mat-toolbar>
+  </mat-toolbar>
   <div>
-      <mat-form-field appearance="standard" appearance="outline">
-        <mat-icon matPrefix>search</mat-icon>
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese lo que desea buscar" #input>
-      </mat-form-field>
+    <mat-form-field appearance="standard" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <mat-label>Filtrar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese lo que desea buscar" #input>
+    </mat-form-field>
   </div>
 
-  <div >
+  <div>
 
   </div>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
 
-    <ng-container matColumnDef="curso">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Curso </th>
-      <td mat-cell *matCellDef="let row"> {{row.curso.nombreCurso}} </td>
-    </ng-container>
+      <ng-container matColumnDef="curso">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Curso </th>
+        <td mat-cell *matCellDef="let row"> {{row.curso.nombreCurso}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="pregunta">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pregunta </th>
-      <td mat-cell *matCellDef="let row"> {{row.nombrePregunta}} </td>
-    </ng-container>
+      <ng-container matColumnDef="pregunta">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Pregunta </th>
+        <td mat-cell *matCellDef="let row"> {{row.nombrePregunta}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="tipoPregunta">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo pregunta </th>
-      <td mat-cell *matCellDef="let row"> {{row.tipoPregunta.nombreTipoPregunta}} </td>
-    </ng-container>
+      <ng-container matColumnDef="tipoPregunta">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo pregunta </th>
+        <td mat-cell *matCellDef="let row"> {{row.tipoPregunta.nombreTipoPregunta}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
-      <td mat-cell *matCellDef="let row"><mat-chip-list><mat-chip selected [ngStyle]="{'background-color':row.estado === 'ACT' ? 'green' : 'red' }">{{getEstado(row.estado)}}</mat-chip></mat-chip-list></td>
-    </ng-container>
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-chip-list>
+            <mat-chip selected [ngStyle]="{'background-color':row.estado === 'ACT' ? 'green' : 'red' }">
+              {{getEstado(row.estado)}}</mat-chip>
+          </mat-chip-list>
+        </td>
+      </ng-container>
 
 
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef> Acciones </th>
-      <td mat-cell *matCellDef="let row">
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let row">
           <button mat-raised-button color="primary" [matMenuTriggerFor]="menuCrud">
-              <mat-icon>more_vert</mat-icon>
+            <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menuCrud="matMenu">
-              <button mat-menu-item [routerLink]="['/pages/pregunta', 'edit', row.idPregunta]">
-                  <mat-icon>edit</mat-icon>
-                  <span>Editar</span>
-                </button>
-                <button mat-menu-item (click)="delete(row)">
-                  <mat-icon>delete</mat-icon>
-                  <span>Eliminar</span>
-                </button>
+            <button mat-menu-item [routerLink]="['/pages/pregunta', 'edit', row.idPregunta]">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="update(row)">
+              <mat-icon>{{row.estado == 'ACT' ? 'delete' : 'check_circle'}}</mat-icon>
+              <span>{{row.estado == 'ACT'? 'Desactivar' : 'Activar'}}</span>
+            </button>
 
           </mat-menu>
 
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    <!-- Row shown when there is no matching data. -->
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No hay informacion de la busqueda {{input.value}}</td>
-    </tr>
-  </table>
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay informacion de la busqueda {{input.value}}</td>
+      </tr>
+    </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-</div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
 </div>

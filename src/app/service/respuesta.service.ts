@@ -9,55 +9,52 @@ import { Curso } from '../model/curso';
 import { TipoPregunta } from '../model/tipo-pregunta';
 import { Pregunta } from '../model/pregunta';
 import { RespuestaApi } from '../model/dto/respuesta-api';
+import { Respuesta } from '../model/respuesta';
+import { BandejaRespuestaInDTO } from '../model/dto/bandeja-respuesta-in';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PreguntaService {
+export class RespuestaService {
 
 
-  private url: string = `${environment.host}/pregunta`;
+  private url: string = `${environment.host}/respuesta`;
 
   constructor(private router: Router,
     private http: HttpClient) { }
 
-  getPreguntas() {
-    return this.http.get<Pregunta[]>(`${this.url}`)
+  bandeja(x: BandejaRespuestaInDTO) {
+    return this.http.post<Respuesta[]>(`${this.url}/bandeja`, x)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntaById(id: string) {
-    return this.http.get<Pregunta>(`${this.url}/${id}`)
+
+  getAll() {
+    return this.http.get<Respuesta[]>(`${this.url}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntasByCurso(idCurso: string) {
-    return this.http.get<Pregunta[]>(`${this.url}/curso/${idCurso}`)
+  getById(id: string) {
+    return this.http.get<Respuesta>(`${this.url}/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntasByTipoPregunta(idTipoPregunta: string) {
-    return this.http.get<Pregunta[]>(`${this.url}/tipoPregunta/${idTipoPregunta}`)
+  getByPregunta(id: string) {
+    return this.http.get<Respuesta[]>(`${this.url}/pregunta/${id}`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  getPreguntasByCursoAndTipoPregunta(idCurso: string, idTipoPregunta: string) {
-    return this.http.get<Pregunta[]>(`${this.url}/curso/${idCurso}/tipoPregunta/${idTipoPregunta}`)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
 
-  save(pregunta: Pregunta) {
-    return this.http.post<Pregunta>(`${this.url}`, pregunta)
+  save(respuesta: Respuesta) {
+    return this.http.post<Respuesta>(`${this.url}`, respuesta)
       .pipe(
         catchError(this.handleError)
       );
@@ -86,7 +83,7 @@ export class PreguntaService {
       console.log('Error:', error.error);
     }
     //catch and rethrow
-    return throwError('Error en peticion del servicio');
+    return throwError(error);
 
   }
 }

@@ -1,0 +1,105 @@
+<div class="container">
+  <mat-toolbar color="primary"><span>Registrar Apertura del Examen</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="accent" class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon" (click)="cancelar()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <form [formGroup]="form">
+
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Curso</mat-label>
+          <input type="text" formControlName="curso" matInput>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Grupo</mat-label>
+          <input type="text" matInput formControlName="grupo">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Examenes</mat-label>
+          <mat-select formControlName="examen">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of examenes" [value]="c.idExamen">
+              {{c.nombreExamen}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de Apertura</mat-label>
+          <input matInput [ngxMatDatetimePicker]="pickertime" formControlName="fechaInicio" required>
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="$any(pickertime)">
+          </mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickertime [showSpinners]="showSpinners" [color]="color" [defaultTime]="defaultTime"
+            [stepHour]="stepHour" [stepMinute]="stepMinute" [touchUi]="touchUi" [enableMeridian]="true">
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+      </div>
+
+      <div class="col-12 col-md-6">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de Cierre</mat-label>
+          <input matInput [ngxMatDatetimePicker]="pickertime2" formControlName="fechaFin" required>
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="$any(pickertime2)">
+          </mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickertime2 [showSpinners]="showSpinners" [color]="color"
+            [defaultTime]="defaultTime" [stepHour]="stepHour" [stepMinute]="stepMinute" [touchUi]="touchUi"
+            [enableMeridian]="true">
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Tiempo de duracion</mat-label>
+          <input type="text" formControlName="tiempoDuracion" matInput>
+          <span matSuffix>&nbsp; minutos</span>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>N° de intentos</mat-label>
+          <input type="number" min="0" formControlName="intentos" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="row">
+    <div class="col-md-4">
+      <button class="button-base" [disabled]="form.invalid" (click)="grabar()" mat-raised-button color="primary">
+        <mat-icon>save</mat-icon>
+        <span>Grabar</span>
+      </button>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<div class="principal">
+
+  <mat-toolbar color="primary">
+    <span>Bandeja de Aperturas de Examenes</span>
+  </mat-toolbar>
+
+  <form [formGroup]="form">
+    <br>
+    <div class="row">
+
+      <div class="col-12 col-md-12">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Curso</mat-label>
+          <mat-select formControlName="curso" (ngModelChange)="onSelectCurso($event)" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of cursos" [value]="c.idCurso">
+              {{c.nombreCurso}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Grupos</mat-label>
+          <mat-select formControlName="grupo" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of cursosGrupo" [value]="c.idCursoGrupo">
+              {{c.nombreGrupo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Examenes</mat-label>
+          <mat-select formControlName="examen">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of examenes" [value]="c.idExamen">
+              {{c.nombreExamen}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <button color="accent" class="btn-form" mat-raised-button matTooltip="Buscar" matTooltipPosition="above"
+            (click)="this.load()">
+            <mat-icon>search</mat-icon> Buscar
+          </button>
+
+        </div>
+
+        <div class="col-12 col-md-3">
+          <button color="accent" class="btn-form" mat-raised-button matTooltip="Limpiar" matTooltipPosition="above"
+            (click)="clear()">
+            <mat-icon>cleaning_services</mat-icon> Limpiar
+          </button>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <button color="accent" [disabled]="form.invalid" class="btn-form" mat-raised-button
+            matTooltip="Agregar nueva apertura examen" matTooltipPosition="above" (click)="this.addApertura()">
+            <mat-icon>add</mat-icon> Nueva
+          </button>
+
+        </div>
+
+
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+<br>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="examen">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre del Examen </th>
+      <td mat-cell *matCellDef="let row"> {{row.examen.nombreExamen}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaInicio">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Inicio </th>
+      <td mat-cell *matCellDef="let row"> {{row.fechaHoraApertura | date:'dd/MM/yyyy, HH:mm'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaCierre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Cierre </th>
+      <td mat-cell *matCellDef="let row"> {{row.fechaHoraCierre | date:'dd/MM/yyyy, HH:mm'}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-chip-list>
+          <mat-chip selected [ngStyle]="{'background-color':row.estado === 'ACT' ? 'green' : 'red' }">
+            {{getEstado(row.estado)}}</mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menuCrud">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menuCrud="matMenu">
+
+          <button mat-menu-item (click)="verAlumnos()" matTooltip="Seleccionar" matTooltipPosition="above">
+            <mat-icon>visibility</mat-icon>
+            <span>ver alumnos</span>
+          </button>
+
+          <button mat-menu-item>
+            <mat-icon>contact_mail</mat-icon>
+            <span>notificar examen</span>
+          </button>
+
+          <button mat-menu-item (click)="cerrar(row)">
+            <mat-icon>event_busy</mat-icon>
+            <span>cerrar ahora</span>
+          </button>
+
+          <button mat-menu-item [routerLink]="['/pages/examen-apertura', 'edit', row.idExamenApertura]">
+            <mat-icon>edit</mat-icon>
+            <span>modificar</span>
+          </button>
+          <button mat-menu-item (click)="update(row)">
+            <mat-icon>{{row.estado == 'ACT' ? 'delete' : 'check_circle'}}</mat-icon>
+            <span>{{row.estado == 'ACT'? 'desactivar' : 'activar'}}</span>
+          </button>
+
+        </mat-menu>
+
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data.
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No hay informacion de la busqueda {{input.value}}</td>
+    </tr>
+     -->
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>

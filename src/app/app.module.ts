@@ -11,6 +11,11 @@ import { BasicAuthHtppInterceptorService } from './service/basic-auth-intercepto
 import { PagesComponent } from './pages/pages.component';
 import { MultilevelMenuService, NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es-PE';
+registerLocaleData(es);
 
 @NgModule({
   declarations: [
@@ -25,11 +30,15 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AppRoutingModule,
     HttpClientModule,
     NgMaterialMultilevelMenuModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    MatDatepickerModule,
+    NgxMatNativeDateModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: "es-PE"},
-    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true },
+    { provide: LOCALE_ID, useValue: "es-PE" },
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true },
     MultilevelMenuService,
 
   ],
