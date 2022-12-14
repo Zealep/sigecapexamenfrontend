@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { PreguntaService } from '../../../../service/pregunta.service';
@@ -24,6 +24,7 @@ export class RespuestaFormComponent implements OnInit {
   curso!: Curso
   pregunta!: Pregunta
   trueOrFalse!: string
+
 
   form: FormGroup = new FormGroup({
     curso: new FormControl({ value: '', disabled: true }),
@@ -82,6 +83,11 @@ export class RespuestaFormComponent implements OnInit {
     this.getCurso();
     this.getPregunta();
     this.initEditForm();
+
+  }
+
+  ngAfterViewInit() {
+
   }
 
   getCurso() {
@@ -127,7 +133,7 @@ export class RespuestaFormComponent implements OnInit {
         return EMPTY
       }))
       .subscribe(x => {
-        this.clearForm();
+        //this.clearForm();
         this.snackBar.open('Se registro correctamente la respuesta', 'X', {
           horizontalPosition: 'center',
           verticalPosition: 'top',
@@ -136,7 +142,6 @@ export class RespuestaFormComponent implements OnInit {
 
         });
       })
-
   }
 
   elegirRespuesta(event: any) {
@@ -152,6 +157,9 @@ export class RespuestaFormComponent implements OnInit {
         this.getCurso()
         this.getPregunta()
         this.form.controls['enunciado'].setValue(c.enunciado);
+        if (c.pregunta.tipoPregunta.idTipoPregunta == '20220703') {
+          this.trueOrFalse = c.enunciado
+        }
         this.form.controls['retroalimentacion'].setValue(c.retroAlimentacion);
         this.form.controls['indRespuesta'].setValue(c.respuestaCorrecta);
       });

@@ -33,7 +33,8 @@
 
       <label id="example-radio-group-label3">Enunciado respuesta
       </label><br>
-      <mat-radio-group aria-labelledby="example-radio-group-label3" (change)="elegirRespuesta($event)">
+      <mat-radio-group [(ngModel)]="trueOrFalse" [ngModelOptions]="{standalone: true}"
+        aria-labelledby="example-radio-group-label3" (change)="elegirRespuesta($event)">
         <mat-radio-button value="V">VERDADERO</mat-radio-button>
         <mat-radio-button value="F" style="margin-left:5px ;">FALSO</mat-radio-button>
       </mat-radio-group>

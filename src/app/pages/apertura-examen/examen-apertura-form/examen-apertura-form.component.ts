@@ -11,34 +11,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExamenApertura } from '../../../model/examen-apertura';
 import { ExamenAperturaService } from '../../../service/examen-apertura.service';
 import { catchError, EMPTY } from 'rxjs';
-import { ThemePalette } from '@angular/material/core';
+import { ThemePalette, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { CREADO_APERTURA_EXAMEN } from 'src/app/shared/var.constant';
 import { NgxMatDateAdapter, NgxMatDateFormats, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { SpinnerOverlayService } from '../../../service/overlay.service';
 
-/*
-const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
- parse: {
-    dateInput: "l, LTS"
-  },
-  display: {
-    dateInput: "l, LTS",
-    monthYearLabel: "MMM YYYY",
-    dateA11yLabel: "LL",
-    monthYearA11yLabel: "MMMM YYYY"
-  }
-};
-*/
 
 @Component({
   selector: 'app-examen-apertura-form',
   templateUrl: './examen-apertura-form.component.html',
   styleUrls: ['./examen-apertura-form.component.css'],
-  /*
-  providers: [
 
-    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }
-  ],
-  */
 })
 export class ExamenAperturaFormComponent implements OnInit {
 
@@ -72,7 +56,8 @@ export class ExamenAperturaFormComponent implements OnInit {
     fechaInicio: new FormControl(''),
     fechaFin: new FormControl(''),
     tiempoDuracion: new FormControl(''),
-    intentos: new FormControl('')
+    intentos: new FormControl(''),
+    indEncuesta: new FormControl('')
   });
 
 
@@ -82,7 +67,8 @@ export class ExamenAperturaFormComponent implements OnInit {
     private examenAperturaService: ExamenAperturaService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private spinnerService: SpinnerOverlayService) { }
 
   ngOnInit(): void {
     this.idExamenApertura = this.route.snapshot.paramMap.get('id')!;
@@ -119,7 +105,9 @@ export class ExamenAperturaFormComponent implements OnInit {
       })
   }
 
+
   grabar() {
+    this.spinnerService.show()
     const examenApertura = new ExamenApertura();
     const examen = new Examen()
     const cursoGrupo = new CursoGrupo()
@@ -139,9 +127,16 @@ export class ExamenAperturaFormComponent implements OnInit {
     examenApertura.fechaHoraCierre = this.form.get('fechaFin')?.value;
     examenApertura.tiempoDuracion = this.form.get('tiempoDuracion')?.value;
     examenApertura.numeroIntentos = this.form.get('intentos')?.value;
+    if (this.form.get('indEncuesta')?.value) {
+      examenApertura.indEncuesta = 'S'
+    }
+    else {
+      examenApertura.indEncuesta = 'N'
+    }
 
     this.examenAperturaService.save(examenApertura)
       .pipe(catchError(error => {
+        this.spinnerService.hide()
         console.log('error', error)
         this.snackBar.open(error.error.message, "X", {
           horizontalPosition: 'center',
@@ -152,6 +147,7 @@ export class ExamenAperturaFormComponent implements OnInit {
         return EMPTY
       }))
       .subscribe(x => {
+        this.spinnerService.hide()
         this.clearForm();
         this.snackBar.open('Se registro correctamente la apertura del examen', 'X', {
           horizontalPosition: 'center',
@@ -174,10 +170,18 @@ export class ExamenAperturaFormComponent implements OnInit {
         this.getGrupo()
         this.getExamenes()
         this.form.controls['examen'].setValue(c.examen.idExamen);
+        console.log('fecha apertura', c.fechaHoraApertura)
         this.form.controls['fechaInicio'].setValue(c.fechaHoraApertura);
         this.form.controls['fechaFin'].setValue(c.fechaHoraCierre);
         this.form.controls['tiempoDuracion'].setValue(c.tiempoDuracion);
         this.form.controls['intentos'].setValue(c.numeroIntentos);
+        if (c.indEncuesta == 'S') {
+          this.form.controls['indEncuesta'].setValue(true);
+        }
+        else {
+          this.form.controls['indEncuesta'].setValue(false);
+        }
+
         this.estadoEditar = c.estado
       });
     }

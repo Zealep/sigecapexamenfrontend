@@ -66,11 +66,42 @@ export class ExamenAperturaService {
 
   cerrarApertura(id: string) {
     let parms = new HttpParams()
-    parms.append("id", id)
-    return this.http.delete<RespuestaApi>(`${this.url}/cerrar`)
+    parms = parms.append("id", id)
+    return this.http.delete<RespuestaApi>(`${this.url}/cerrar`,
+      {
+        params: parms
+      })
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  notificar(idApertura: string, idCurso: string, idGrupo: string) {
+    let parms = new HttpParams()
+    parms = parms.append("idApertura", idApertura)
+    parms = parms.append("curso", idCurso)
+    parms = parms.append("grupo", idGrupo)
+    return this.http.get<RespuestaApi>(`${this.url}/notificar`,
+      {
+        params: parms
+      })
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  registrarAsistencia(dni: string, idCurso: string, idGrupo: string) {
+    let parms = new HttpParams()
+    parms = parms.append("dni", dni)
+    parms = parms.append("curso", idCurso)
+    parms = parms.append("grupo", idGrupo)
+    return this.http.get<RespuestaApi>(`${this.url}/asistencia`,
+      {
+        params: parms
+      })
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.principal{
+  margin-top: 0.5rem;
+}
+.btn-form{
+  width: 100%;
+}
+
+.mat-cell, .mat-header-cell{
+  padding: 0.3rem;
+}

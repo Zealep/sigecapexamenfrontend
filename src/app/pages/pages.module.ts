@@ -21,6 +21,10 @@ import { ExamenAperturaFormComponent } from './apertura-examen/examen-apertura-f
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { VerAlumnosComponent } from './apertura-examen/ver-alumnos/ver-alumnos.component';
+import { AsistenciaExamenComponent } from './asistencia-examen/asistencia-examen.component';
+import { BandejaExamenesComponent } from './bandeja-examenes/bandeja-examenes.component';
+import { GenerarExamenComponent } from './bandeja-examenes/generar-examen/generar-examen.component';
+import { CdTimerModule } from 'angular-cd-timer';
 
 
 
@@ -36,7 +40,10 @@ import { VerAlumnosComponent } from './apertura-examen/ver-alumnos/ver-alumnos.c
     ExamenListComponent,
     BandejaAperturaComponent,
     ExamenAperturaFormComponent,
-    VerAlumnosComponent
+    VerAlumnosComponent,
+    AsistenciaExamenComponent,
+    BandejaExamenesComponent,
+    GenerarExamenComponent
   ],
   imports: [
     CommonModule,
@@ -52,6 +59,7 @@ import { VerAlumnosComponent } from './apertura-examen/ver-alumnos/ver-alumnos.c
     NgxMatTimepickerModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
+    CdTimerModule
   ]
 })
 export class PagesModule { }

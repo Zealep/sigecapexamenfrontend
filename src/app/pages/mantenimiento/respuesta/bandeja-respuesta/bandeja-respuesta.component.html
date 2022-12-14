@@ -87,6 +87,11 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 
+    <ng-container matColumnDef="pregunta">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Pregunta </th>
+      <td mat-cell *matCellDef="let row"> {{row.pregunta.enunciadoTexto}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="respuesta">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Respuesta </th>
       <td mat-cell *matCellDef="let row"> {{row.enunciadoTexto}} </td>

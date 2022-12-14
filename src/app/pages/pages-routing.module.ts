@@ -9,6 +9,9 @@ import { ExamenListComponent } from './mantenimiento/examen/examen-list/examen-l
 import { ExamenFormComponent } from './mantenimiento/examen/examen-form/examen-form.component';
 import { BandejaAperturaComponent } from './apertura-examen/bandeja-apertura/bandeja-apertura.component';
 import { ExamenAperturaFormComponent } from './apertura-examen/examen-apertura-form/examen-apertura-form.component';
+import { AsistenciaExamenComponent } from './asistencia-examen/asistencia-examen.component';
+import { BandejaExamenesComponent } from './bandeja-examenes/bandeja-examenes.component';
+import { GenerarExamenComponent } from './bandeja-examenes/generar-examen/generar-examen.component';
 
 const routes: Routes = [{
   path: '',
@@ -62,6 +65,11 @@ const routes: Routes = [{
 
 
     {
+      path: 'examen-asistencia',
+      component: AsistenciaExamenComponent,
+    },
+
+    {
       path: 'examen-curso',
       component: ExamenListComponent,
     },
@@ -72,6 +80,18 @@ const routes: Routes = [{
     {
       path: 'examen/edit/:id/:curso',
       component: ExamenFormComponent,
+    },
+
+
+    {
+      path: 'examen-bandeja-alumno',
+      component: BandejaExamenesComponent,
+    },
+
+
+    {
+      path: 'examen-iniciar/:examen',
+      component: GenerarExamenComponent,
     },
 
   ]

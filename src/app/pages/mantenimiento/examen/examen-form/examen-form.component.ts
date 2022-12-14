@@ -81,8 +81,13 @@ export class ExamenFormComponent implements OnInit {
               preguntasChecked.push(c.detalleExamen[i].pregunta)
             }
 
+            console.log('preguntas checked', preguntasChecked)
+
             //this.selection = new SelectionModel<Pregunta>(true, preguntasChecked)
-            this.dataSource.data = this.preguntas
+            for (let i = 0; i < preguntasChecked.length; i++) {
+              this.dataSource.data.filter(x => preguntasChecked[i].idPregunta == x.idPregunta).map(x => this.selection.select(x))
+            }
+
 
           });
         }

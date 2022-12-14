@@ -1,0 +1,36 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.principal{
+  margin-top: 0.5rem;
+}
+.btn-form{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.asistencia-card{
+  border: 2px;
+  margin-top: 20px;
+}
+
+::ng-deep .mat-card{
+
+  border: 55px solid #000
+ }
+
+ .mat-icon-vertical {
+  vertical-align: middle;
+}
+
+.search{
+
+
+
+}

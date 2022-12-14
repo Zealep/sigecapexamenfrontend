@@ -17,6 +17,7 @@ import { ExamenService } from './../../../service/examen.service';
 import { BandejaExamenAperturaInDTO } from '../../../model/dto/bandeja-examen-apertura';
 import { VerAlumnosComponent } from '../ver-alumnos/ver-alumnos.component';
 import { CERRADO_APERTURA_EXAMEN } from '../../../shared/var.constant';
+import { SpinnerOverlayService } from '../../../service/overlay.service';
 
 @Component({
   selector: 'app-bandeja-apertura',
@@ -48,7 +49,8 @@ export class BandejaAperturaComponent implements OnInit {
     private snackBar: MatSnackBar,
     private cursoService: CursoService,
     private cursoGrupoService: CursoGrupoService,
-    private router: Router
+    private router: Router,
+    private spinnerService: SpinnerOverlayService
   ) {
 
   }
@@ -105,12 +107,12 @@ export class BandejaAperturaComponent implements OnInit {
   }
 
   update(x: ExamenApertura) {
-    let newState
-    if (x.estado == 'ACT') {
+    let newState = ''
+    if (x.estado == 'CRE') {
       newState = 'INA'
     }
-    else {
-      newState = 'ACT'
+    if (x.estado == 'INA') {
+      newState = 'CRE'
     }
 
     this.examenAperturaService.updateState(x.idExamenApertura, newState)
@@ -125,16 +127,30 @@ export class BandejaAperturaComponent implements OnInit {
         this.load()
       })
   }
+  notificar(row: ExamenApertura) {
+    this.spinnerService.show()
+    this.examenAperturaService.notificar(row.idExamenApertura, row.examen.curso.idCurso, row.cursoGrupo.idCursoGrupo)
+      .subscribe(x => {
+        this.spinnerService.hide()
+        this.snackBar.open('Se notificaron mediante correo a los participantes del examen', 'X', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 5000,
+          panelClass: ["ok-style"]
 
-  verAlumnos() {
-    const idGrupo = this.form.get('grupo')?.value;
+        });
+      })
+  }
 
-    if (idGrupo == null) {
-      alert('Debes de seleccionar un grupo')
-      return
-    }
+  verAlumnos(row: ExamenApertura) {
+
+    const idGrupo = row.cursoGrupo.idCursoGrupo
+    const idCurso = row.examen.curso.idCurso
+
     const dialogRef = this.dialog.open(VerAlumnosComponent, {
+      width: '800px',
       data: {
+        idCurso: idCurso,
         idGrupo: idGrupo
       }
     });
@@ -143,17 +159,14 @@ export class BandejaAperturaComponent implements OnInit {
     });
   }
 
-
-
-
   getEstado(estado: string) {
-    if (estado == 'ACT') {
-      return 'ACTIVO'
-    }
-    else {
-      return 'INACTIVO'
+
+    switch (estado) {
+      case 'CRE': return 'CREADO'; break;
+      case 'CER': return 'CERRADO'; break;
+      case 'INA': return 'INACTIVO'; break;
+      default: return 'SIN'
     }
   }
-
 }
 

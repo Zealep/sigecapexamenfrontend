@@ -23,7 +23,7 @@ import { BandejaRespuestaInDTO } from '../../../../model/dto/bandeja-respuesta-i
 })
 export class BandejaRespuestaComponent implements OnInit {
 
-  displayedColumns: string[] = ['respuesta', 'indicador', 'estado', 'acciones'];
+  displayedColumns: string[] = ['pregunta', 'respuesta', 'indicador', 'estado', 'acciones'];
   dataSource!: MatTableDataSource<Respuesta>;
   respuestas: Respuesta[] = [];
   cursos: Curso[] = [];

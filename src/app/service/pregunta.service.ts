@@ -9,6 +9,7 @@ import { Curso } from '../model/curso';
 import { TipoPregunta } from '../model/tipo-pregunta';
 import { Pregunta } from '../model/pregunta';
 import { RespuestaApi } from '../model/dto/respuesta-api';
+import { ExamenPreguntaDTO } from '../model/dto/examen-pregunta';
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,13 @@ export class PreguntaService {
 
   updateState(id: string, state: string) {
     return this.http.delete<RespuestaApi>(`${this.url}/${id}/${state}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getPreguntasPorExamen(idExamen: string) {
+    return this.http.get<ExamenPreguntaDTO[]>(`${this.url}/examen/${idExamen}`)
       .pipe(
         catchError(this.handleError)
       );

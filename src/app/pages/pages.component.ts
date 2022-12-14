@@ -1,9 +1,10 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { ItemMenu } from '../model/dto/item-menu';
 import { MenuService } from '../service/menu.service';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-pages',
@@ -14,7 +15,8 @@ export class PagesComponent implements OnInit {
 
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-
+  mobileQuery!: MediaQueryList;
+  usuario!: string
 
   items: ItemMenu[] = []
 
@@ -30,16 +32,27 @@ export class PagesComponent implements OnInit {
   };
 
 
+  private _mobileQueryListener: () => void;
 
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router, private login: AuthenticationService, private menuService: MenuService
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener,
 
-  constructor(private observer: BreakpointObserver, private router: Router, private menuService: MenuService) { }
+    );
+  }
 
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
   ngOnInit(): void {
+    this.usuario = sessionStorage.getItem('username')!;
     this.getMenus();
   }
 
   getMenus() {
-    this.menuService.getMenus('22060017', '20210009')
+    this.menuService.getMenus(this.usuario)
       .subscribe(x => {
         this.items = x;
       })
@@ -48,6 +61,9 @@ export class PagesComponent implements OnInit {
   selectedItem(event: any) {
     console.log('event', event)
     //this.router.navigate(['/pages'+event.link]);
+  }
+  salir() {
+    this.login.logOut();
   }
 
 

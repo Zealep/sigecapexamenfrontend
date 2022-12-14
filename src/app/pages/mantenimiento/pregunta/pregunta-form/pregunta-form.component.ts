@@ -38,7 +38,6 @@ export class PreguntaFormComponent implements OnInit {
     translate: 'no',
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
-
     toolbarHiddenButtons: [
       [
         'undo',

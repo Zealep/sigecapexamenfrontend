@@ -6,6 +6,7 @@ import { RespuestaApi } from '../model/dto/respuesta-api';
 import { BandejaExamenInDTO } from '../model/dto/bandeja-examen';
 import { Examen } from '../model/examen';
 import { Router } from '@angular/router';
+import { BandejaExamenPorAlumnoDTO } from '../model/dto/bandeja-examen-alumno';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,13 @@ export class ExamenService {
 
   updateState(id: string, state: string) {
     return this.http.delete<RespuestaApi>(`${this.url}/${id}/${state}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getBandejaPorAlumno(usuario: string) {
+    return this.http.get<BandejaExamenPorAlumnoDTO[]>(`${this.url}/bandeja-alumno/${usuario}`)
       .pipe(
         catchError(this.handleError)
       );

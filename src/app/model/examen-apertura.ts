@@ -10,4 +10,5 @@ export class ExamenApertura {
   tiempoDuracion!: number
   numeroIntentos!: number
   estado!: string
+  indEncuesta!: string
 }

@@ -1,5 +1,18 @@
-<app-header></app-header>
-<!--
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary">
+    <img src="assets/images/logo blanco.png" height="60px" width="200px">
+
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="example-spacer"></span>
+    <span>{{usuario}} &nbsp;</span>
+    <button mat-mini-fab (click)="salir()" color="accent">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <!--
 <mat-toolbar color="primary">
   <button
   mat-icon-button
@@ -12,16 +25,18 @@
   <span>Sistema de ventas</span>
 </mat-toolbar>
 -->
-<mat-sidenav-container class="example-container" >
-  <mat-sidenav mode="side" opened #sidenav="matSidenav">
-    <div *ngIf="this.items != null">
-      <ng-material-multilevel-menu [configuration]='config' [items]='items' (selectedItem)="selectedItem($event)">
-      </ng-material-multilevel-menu>
-  </div>
-  </mat-sidenav>
-  <mat-sidenav-content><div>
-    <div class="contenedor">
-      <router-outlet></router-outlet>
-    </div>
-    </div></mat-sidenav-content>
-</mat-sidenav-container>
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" opened [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
+      <div *ngIf="this.items != null">
+        <ng-material-multilevel-menu [configuration]='config' [items]='items' (selectedItem)="selectedItem($event)">
+        </ng-material-multilevel-menu>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
