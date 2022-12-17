@@ -90,7 +90,7 @@ const routes: Routes = [{
 
 
     {
-      path: 'examen-iniciar/:examen',
+      path: 'examen-iniciar/:examen/:inscripcion',
       component: GenerarExamenComponent,
     },
 

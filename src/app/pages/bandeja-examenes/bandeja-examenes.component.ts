@@ -91,7 +91,7 @@ export class BandejaExamenesComponent implements OnInit {
   }
 
   iniciarExamen(c: BandejaExamenPorAlumnoDTO) {
-
+    this.router.navigate(['/pages/examen-iniciar', c.idExamen, c.idSidExamen]);
   }
 
   firmarExamen(c: BandejaExamenPorAlumnoDTO) {

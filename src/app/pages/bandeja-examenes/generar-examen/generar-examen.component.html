@@ -1,16 +1,21 @@
 <div class="container">
 
-  <div class="row" style="margin-top: 10px;">
-    <mat-toolbar>
-      <mat-toolbar-row>
-        <span>EXAMEN : {{examenApertura.examen.curso.nombreCurso}}</span>
-      </mat-toolbar-row>
-      <mat-toolbar-row>
-        <span style="font-size: 14px;">Tiempo restante: &nbsp;</span>
-        <cd-timer [countdown]="true" [startTime]="3600" format="intelli"></cd-timer>
-      </mat-toolbar-row>
-    </mat-toolbar>
-  </div>
+
+  <mat-toolbar style="margin-top: 2rem;">
+    <mat-toolbar-row>
+      <span>EXAMEN : {{examenApertura?.examen?.curso?.nombreCurso}}</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+      <span style="font-size: 14px;">Tiempo restante: &nbsp;</span>
+
+      <div *ngIf="tiempoRestanteSegundos">
+        <cd-timer #basicTimer format="intelli" [countdown]="true" [startTime]="tiempoRestanteSegundos">
+
+        </cd-timer>
+      </div>
+
+    </mat-toolbar-row>
+  </mat-toolbar>
 
   <form>
 
@@ -18,6 +23,8 @@
       <div [formGroup]="getGroup(i)">
         <mat-card style="margin: 0.5rem;">
           <div [innerHTML]="i+1+')' + p.enunciadoPregunta" style="font-weight: bold;">
+          </div>
+          <div [innerHTML]="p.retroAlimentacionPregunta">
           </div>
 
           <mat-radio-group class="example-radio-group" formControlName="idRespuesta">

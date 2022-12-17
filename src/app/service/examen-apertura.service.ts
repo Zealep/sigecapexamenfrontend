@@ -8,6 +8,7 @@ import { Examen } from '../model/examen';
 import { Router } from '@angular/router';
 import { ExamenApertura } from '../model/examen-apertura';
 import { BandejaExamenAperturaInDTO } from '../model/dto/bandeja-examen-apertura';
+import { ExamenInscripcion } from '../model/examen-inscripcion';
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +103,13 @@ export class ExamenAperturaService {
       .pipe(
         catchError(this.handleError)
       )
+  }
+
+  getExamenInscripcionById(id: string) {
+    return this.http.get<ExamenInscripcion>(`${this.url}/inscripcion/${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

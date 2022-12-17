@@ -13,7 +13,7 @@ import { MultilevelMenuService, NgMaterialMultilevelMenuModule } from 'ng-materi
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { CdTimerModule } from 'angular-cd-timer';
 
 import es from '@angular/common/locales/es-PE';
@@ -42,6 +42,7 @@ registerLocaleData(es);
   providers: [
     { provide: LOCALE_ID, useValue: "es-PE" },
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHtppInterceptorService, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     MultilevelMenuService,
 
   ],
