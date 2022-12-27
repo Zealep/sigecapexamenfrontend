@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { SpinnerOverlayService } from '../../service/overlay.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { BandejaExamenPorAlumnoDTO } from '../../model/dto/bandeja-examen-alumno';
+import { catchError, EMPTY } from 'rxjs';
+import { FirmarExamenComponent } from './firmar-examen/firmar-examen.component';
 
 @Component({
   selector: 'app-bandeja-examenes',
@@ -91,10 +93,39 @@ export class BandejaExamenesComponent implements OnInit {
   }
 
   iniciarExamen(c: BandejaExamenPorAlumnoDTO) {
-    this.router.navigate(['/pages/examen-iniciar', c.idExamen, c.idSidExamen]);
+    console.log('c', c)
+    this.spinnerService.show()
+    this.examenAperturaService.validarInicioExamen(c)
+      .pipe(catchError(error => {
+        this.spinnerService.hide()
+        console.log('error', error)
+        this.snackBar.open(error.error.message, "X", {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 7000,
+          panelClass: ["error-style"]
+        })
+        return EMPTY
+      }))
+      .subscribe(x => {
+        this.spinnerService.hide()
+        this.router.navigate(['/pages/examen-iniciar', c.idExamen, c.idSidExamen]);
+      })
+
+
   }
 
   firmarExamen(c: BandejaExamenPorAlumnoDTO) {
+
+    const dialogRef = this.dialog.open(FirmarExamenComponent, {
+      width: '600px',
+      data: {
+        info: c,
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['/pages/examen-bandeja-alumno'])
+    });
 
   }
 
@@ -107,4 +138,6 @@ export class BandejaExamenesComponent implements OnInit {
       default: return 'SIN'
     }
   }
+
+
 }

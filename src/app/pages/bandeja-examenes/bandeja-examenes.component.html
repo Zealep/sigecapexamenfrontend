@@ -45,13 +45,14 @@
           <mat-menu #menuCrud="matMenu">
 
             <button mat-menu-item (click)="iniciarEncuesta(row)"
-              [disabled]="row.indicadorEncuesta == 'N' && row.indicadorAsistio == 'N'">
+              [disabled]="row.indicadorEncuesta == 'N' || row.indicadorAsistio == 'N'">
               <mat-icon>quiz</mat-icon>
               <span> iniciar encuesta</span>
             </button>
 
 
             <button mat-menu-item (click)="iniciarExamen(row)">
+
               <mat-icon>pending_actions</mat-icon>
               <span>iniciar examen</span>
             </button>

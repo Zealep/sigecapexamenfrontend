@@ -17,6 +17,7 @@ import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@ang
 import { CdTimerModule } from 'angular-cd-timer';
 
 import es from '@angular/common/locales/es-PE';
+import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
 registerLocaleData(es);
 
 @NgModule({
@@ -37,7 +38,8 @@ registerLocaleData(es);
     NgxMatTimepickerModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
-    CdTimerModule
+    CdTimerModule,
+    AngularSignaturePadModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "es-PE" },

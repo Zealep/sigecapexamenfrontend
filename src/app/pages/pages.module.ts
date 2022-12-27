@@ -25,6 +25,8 @@ import { AsistenciaExamenComponent } from './asistencia-examen/asistencia-examen
 import { BandejaExamenesComponent } from './bandeja-examenes/bandeja-examenes.component';
 import { GenerarExamenComponent } from './bandeja-examenes/generar-examen/generar-examen.component';
 import { CdTimerModule } from 'angular-cd-timer';
+import { FirmarExamenComponent } from './bandeja-examenes/firmar-examen/firmar-examen.component';
+import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
 
 
 
@@ -43,7 +45,8 @@ import { CdTimerModule } from 'angular-cd-timer';
     VerAlumnosComponent,
     AsistenciaExamenComponent,
     BandejaExamenesComponent,
-    GenerarExamenComponent
+    GenerarExamenComponent,
+    FirmarExamenComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +62,8 @@ import { CdTimerModule } from 'angular-cd-timer';
     NgxMatTimepickerModule,
     MatDatepickerModule,
     NgxMatNativeDateModule,
-    CdTimerModule
+    CdTimerModule,
+    AngularSignaturePadModule
   ]
 })
 export class PagesModule { }

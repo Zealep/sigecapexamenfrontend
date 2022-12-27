@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ExamenApertura } from '../model/examen-apertura';
 import { BandejaExamenAperturaInDTO } from '../model/dto/bandeja-examen-apertura';
 import { ExamenInscripcion } from '../model/examen-inscripcion';
+import { BandejaExamenPorAlumnoDTO } from '../model/dto/bandeja-examen-alumno';
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +112,14 @@ export class ExamenAperturaService {
         catchError(this.handleError)
       );
   }
+
+  validarInicioExamen(e: BandejaExamenPorAlumnoDTO) {
+    return this.http.post<ExamenApertura>(`${this.url}/validar-inicio-examen`, e)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

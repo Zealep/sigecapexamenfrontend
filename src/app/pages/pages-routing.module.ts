@@ -12,6 +12,7 @@ import { ExamenAperturaFormComponent } from './apertura-examen/examen-apertura-f
 import { AsistenciaExamenComponent } from './asistencia-examen/asistencia-examen.component';
 import { BandejaExamenesComponent } from './bandeja-examenes/bandeja-examenes.component';
 import { GenerarExamenComponent } from './bandeja-examenes/generar-examen/generar-examen.component';
+import { FirmarExamenComponent } from './bandeja-examenes/firmar-examen/firmar-examen.component';
 
 const routes: Routes = [{
   path: '',
@@ -92,6 +93,11 @@ const routes: Routes = [{
     {
       path: 'examen-iniciar/:examen/:inscripcion',
       component: GenerarExamenComponent,
+    },
+
+    {
+      path: 'firmar',
+      component: FirmarExamenComponent,
     },
 
   ]

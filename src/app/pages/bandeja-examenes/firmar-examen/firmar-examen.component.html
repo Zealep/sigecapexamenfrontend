@@ -1,0 +1,24 @@
+<div class="container">
+
+
+  <h1>
+    Firma del examen
+  </h1>
+
+  <div class="row">
+    <div class="sig-container" style="margin-top: 20px;">
+      <signature-pad style="background: none; justify-content:flex-start" #signature (drawStart)="drawStart($event)"
+        (drawEnd)="drawComplete($event)">
+      </signature-pad>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <button mat-raised-button color="primary" (click)="guardar()">Grabar</button>
+
+      <button mat-raised-button style="margin-left: 10px;" (click)="limpiar()">Limpiar</button>
+
+    </div>
+  </div>
+
+
+</div>

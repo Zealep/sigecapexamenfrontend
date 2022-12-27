@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { PreguntaService } from '../../../service/pregunta.service';
 import { ExamenPreguntaDTO } from '../../../model/dto/examen-pregunta';
 import { ExamenAperturaService } from '../../../service/examen-apertura.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExamenApertura } from '../../../model/examen-apertura';
 import * as moment from 'moment';
 import { CdTimerComponent } from 'angular-cd-timer/lib/angular-cd-timer.component';
@@ -11,9 +11,11 @@ import { ExamenInscripcionIntento } from '../../../model/examen-ins-intento';
 import { ExamenInscripcionIntentoRespuesta } from '../../../model/examen-ins-intento-respuesta';
 import { ExamenInscripcion } from '../../../model/examen-inscripcion';
 import { ExamenIntentoService } from '../../../service/examen-intento.service';
-import { catchError, EMPTY } from 'rxjs';
+import { catchError, EMPTY, Observable, Subscription } from 'rxjs';
 import { SpinnerOverlayService } from '../../../service/overlay.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { interval } from 'rxjs';
+
 
 @Component({
   selector: 'app-generar-examen',
@@ -28,6 +30,7 @@ export class GenerarExamenComponent implements OnInit {
   examenApertura!: ExamenApertura
   idExamenInscripcion!: number
   fechaEmpezoReal!: Date
+  sub!: Subscription
 
   alumno!: string
   tiempoRestanteSegundos!: number
@@ -37,6 +40,7 @@ export class GenerarExamenComponent implements OnInit {
     private preguntaService: PreguntaService,
     private examenAperturaService: ExamenAperturaService,
     private route: ActivatedRoute,
+    private router: Router,
     private examenIntentoService: ExamenIntentoService,
     private spinnerService: SpinnerOverlayService,
     private snackBar: MatSnackBar) { }
@@ -57,7 +61,18 @@ export class GenerarExamenComponent implements OnInit {
         var fin = this.addMinutes(x.tiempoDuracion, new Date(x.fechaHoraApertura))
         var seconds = this.diferenciaSegudos(new Date(), fin);
         this.tiempoRestanteSegundos = seconds
-        console.log('segundos', seconds)
+
+        if (this.tiempoRestanteSegundos <= 0) {
+          this.router.navigate(['/pages/examen-bandeja-alumno'])
+        }
+
+        this.sub = interval(this.tiempoRestanteSegundos * 1000)
+          .subscribe((val) => {
+            this.finalizar()
+            this.sub.unsubscribe()
+          });
+
+
       })
   }
 
@@ -156,6 +171,7 @@ export class GenerarExamenComponent implements OnInit {
           panelClass: ["ok-style"]
 
         });
+        this.router.navigate(['/pages/examen-bandeja-alumno']);
       })
 
 
