@@ -1,0 +1,8 @@
+<div class="container" style="margin-top:15px;">
+  <h1>Subir archivo de carga de preguntas y respuestas</h1>
+  <button mat-raised-button color="primary" (click)="fileInput.click()">
+    <input #fileInput type="file" (change)="fileChange($event)" style="display:none;" accept=".csv">
+    <mat-icon>file_upload</mat-icon>
+    Subir archivo csv
+  </button>
+</div>

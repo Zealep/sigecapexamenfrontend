@@ -27,6 +27,7 @@ import { GenerarExamenComponent } from './bandeja-examenes/generar-examen/genera
 import { CdTimerModule } from 'angular-cd-timer';
 import { FirmarExamenComponent } from './bandeja-examenes/firmar-examen/firmar-examen.component';
 import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
+import { CargaMasivaComponent } from './carga-masiva/carga-masiva.component';
 
 
 
@@ -46,7 +47,8 @@ import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
     AsistenciaExamenComponent,
     BandejaExamenesComponent,
     GenerarExamenComponent,
-    FirmarExamenComponent
+    FirmarExamenComponent,
+    CargaMasivaComponent
   ],
   imports: [
     CommonModule,

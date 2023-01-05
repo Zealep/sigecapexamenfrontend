@@ -13,6 +13,7 @@ import { AsistenciaExamenComponent } from './asistencia-examen/asistencia-examen
 import { BandejaExamenesComponent } from './bandeja-examenes/bandeja-examenes.component';
 import { GenerarExamenComponent } from './bandeja-examenes/generar-examen/generar-examen.component';
 import { FirmarExamenComponent } from './bandeja-examenes/firmar-examen/firmar-examen.component';
+import { CargaMasivaComponent } from './carga-masiva/carga-masiva.component';
 
 const routes: Routes = [{
   path: '',
@@ -98,6 +99,11 @@ const routes: Routes = [{
     {
       path: 'firmar',
       component: FirmarExamenComponent,
+    },
+
+    {
+      path: 'carga-masiva',
+      component: CargaMasivaComponent,
     },
 
   ]

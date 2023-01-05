@@ -12,7 +12,8 @@ export class BandejaExamenPorAlumnoDTO {
   fechaHoraApertura!: Date;
   fechaHoraCierre!: Date;
   estado!: string;
-  promedio!: number;
+  notaUltimoIntento!: number;
+  notaFinal!: number;
   indicadorEncuesta!: string;
   indicadorRealizoEncuesta!: string;
   indicadorAsistio!: string;
